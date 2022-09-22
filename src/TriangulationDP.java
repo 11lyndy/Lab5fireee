@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.*;
 
 public class TriangulationDP {
@@ -52,6 +53,25 @@ public class TriangulationDP {
         System.out.println(i + " " + j + " " + traceTable[i][j]);
         printKMap(traceTable, i, traceTable[i][j]);
         printKMap(traceTable, traceTable[i][j], j);
+    }
+
+    public static Point[] ProcessFile(String path) {
+        Point[] points;
+        File file = new File(path);
+        try(Scanner scanner = new Scanner(file)){
+            int n = scanner.nextInt();
+            scanner.nextLine();
+            points = new Point[n];
+            for (int i = 0 ;i<n;i++){
+                String[] temp = scanner.nextLine().split(" ");
+                points[i] = new Point(Integer.parseInt(temp[0]),Integer.parseInt(temp[1]));
+            }
+            return ConvexHull.selectConvexHull(points,points.length).toArray(points);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String[] args) {
